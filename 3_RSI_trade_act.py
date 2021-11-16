@@ -3,15 +3,10 @@ import pandas
 import datetime 
 import time
 
-f = open("./phmemo.txt")
-lines = f.readlines()
-access = lines[1].strip()   # access key
-secret = lines[3].strip()   # secret key
-f.close()
+access = "access key"   # access key
+secret = "secret key'   # secret key
 
 upbit = pyupbit.Upbit(access, secret)
-
-
 
 
 def rsi(ohlc: pandas.DataFrame, period: int = 14):
@@ -83,14 +78,3 @@ while(True):
         elif now_rsi <= 60 :
             higher70[i] = False
     time.sleep(5)
-
-    
-# access = "User access key" # access key 직접 입력 
-# secret = "User secret key" # secret key 직접 입력 
-# upbit = pyupbit.Upbit(access, secret) 
-# print(upbit.get_balance("KRW"))
-
-
-
-
-#출처: https://rebro.kr/140?category=470089 [Rebro의 코딩 일기장]
