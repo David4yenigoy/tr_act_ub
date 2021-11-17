@@ -4,7 +4,7 @@ import datetime
 import time
 
 access = "access key"   # access key
-secret = "secret key'   # secret key
+secret = "secret key"   # secret key
 
 upbit = pyupbit.Upbit(access, secret)
 
@@ -74,6 +74,6 @@ while(True):
         elif now_rsi >= 70 and higher70[i] == False:
             sell(coinlist[i])
             higher70[i] = True
-        elif now_rsi <= 60 :
+        else now_rsi <= 60 :
             higher70[i] = False
     time.sleep(5)
