@@ -4,8 +4,8 @@ import datetime
 import time
 import telegram
 
-bot = telegram.Bot(token='==============')
-chat_id = =============
+bot = telegram.Bot(token='2121725792:AAHyurjL7O9sUU63mPlsH864CdesK9d0bjo')
+chat_id = 1860357696
 
 def rsi(ohlc: pandas.DataFrame, period: int = 14):
     delta = ohlc["close"].diff()
@@ -21,20 +21,22 @@ def rsi(ohlc: pandas.DataFrame, period: int = 14):
 
 
 # 이용할 코인 리스트 
-coinlist = ['KRW-BTC', 'KRW-ETH', 'KRW-NEO', 'KRW-MTL', 'KRW-LTC', 'KRW-XRP', 'KRW-ETC', 'KRW-OMG', 'KRW-SNT', 'KRW-WAVES', 'KRW-XEM', 'KRW-QTUM', 'KRW-LSK', 'KRW-STEEM', 'KRW-XLM', 'KRW-ARDR', 'KRW-ARK', 'KRW-STORJ', 'KRW-GRS', 'KRW-REP', 'KRW-ADA', 'KRW-SBD', 'KRW-POWR', 'KRW-BTG', 'KRW-ICX', 'KRW-EOS', 'KRW-TRX', 'KRW-SC', 'KRW-ONT', 'KRW-ZIL', 'KRW-POLY', 'KRW-ZRX', 'KRW-LOOM', 'KRW-BCH', 'KRW-BAT', 'KRW-IOST', 'KRW-RFR', 'KRW-CVC', 'KRW-IQ', 'KRW-IOTA', 'KRW-MFT', 'KRW-ONG', 'KRW-GAS', 'KRW-UPP', 'KRW-ELF','KRW-KNC', 'KRW-BSV', 'KRW-THETA', 'KRW-QKC', 'KRW-BTT', 'KRW-MOC', 'KRW-ENJ', 'KRW-TFUEL', 'KRW-MANA', 'KRW-ANKR', 'KRW-AERGO', 'KRW-ATOM', 'KRW-TT', 'KRW-CRE', 'KRW-MBL', 'KRW-WAXP', 'KRW-HBAR', 'KRW-MED', 'KRW-MLK', 'KRW-STPT', 'KRW-ORBS', 'KRW-VET', 'KRW-CHZ', 'KRW-STMX', 'KRW-DKA', 'KRW-HIVE', 'KRW-KAVA', 'KRW-AHT', 'KRW-LINK', 'KRW-XTZ', 'KRW-BORA', 'KRW-JST', 'KRW-CRO', 'KRW-TON', 'KRW-SXP', 'KRW-HUNT', 'KRW-PLA', 'KRW-DOT', 'KRW-SRM', 'KRW-MVL', 'KRW-STRAX', 'KRW-AQT', 'KRW-GLM', 'KRW-SSX', 'KRW-META', 'KRW-FCT2', 'KRW-CBK', 'KRW-SAND', 'KRW-HUM', 'KRW-DOGE', 'KRW-STRK', 'KRW-PUNDIX', 'KRW-FLOW', 'KRW-DAWN', 'KRW-AXS', 'KRW-STX', 'KRW-XEC', 'KRW-SOL', 'KRW-MATIC', 'KRW-NU', 'KRW-AAVE', 'KRW-1INCH'] # Coin ticker 추가 
+# coinlist = ['KRW-BTC', 'KRW-ETH', 'KRW-NEO', 'KRW-MTL'] # Coin ticker 추가 
 
+coinlist = pyupbit.get_tickers(fiat="KRW")  # KRW 시장 ticker 전체
 
 while(True):
     for i in range(len(coinlist)):
         data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute3")
         now_rsi = rsi(data, 14).iloc[-1]
-        if now_rsi < 30 :
+        past_rsi = rsi(data, 14).iloc[-2]
+        if now_rsi < 30 and now_rsi < past_rsi :     
             sendMsg = str(coinlist[i]) + "< RSI > :" + str(now_rsi)
             print(coinlist[i], "현재시간: ", datetime.datetime.now(), "< RSI > :", now_rsi)
             bot.sendMessage(chat_id=chat_id, text=sendMsg)
         else :
             pass
-        
+        # print()        
 
        
     time.sleep(5)
