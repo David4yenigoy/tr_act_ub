@@ -4,8 +4,8 @@ import datetime
 import time
 import telegram
 
-bot = telegram.Bot(token='2121725792:AAHyurjL7O9sUU63mPlsH864CdesK9d0bjo')
-chat_id = 1860357696
+bot = telegram.Bot(token='****************')
+chat_id = **************
 
 def rsi(ohlc: pandas.DataFrame, period: int = 14):
     delta = ohlc["close"].diff()
