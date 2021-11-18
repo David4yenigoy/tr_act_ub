@@ -30,7 +30,7 @@ while(True):
         data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute3")
         now_rsi = rsi(data, 14).iloc[-1]
         past_rsi = rsi(data, 14).iloc[-2]
-        if now_rsi < 30 and now_rsi < past_rsi :     
+        if now_rsi < 28 and now_rsi < past_rsi :     
             sendMsg = str(coinlist[i]) + "< RSI > :" + str(now_rsi)
             print(coinlist[i], "현재시간: ", datetime.datetime.now(), "< RSI > :", now_rsi)
             bot.sendMessage(chat_id=chat_id, text=sendMsg)
