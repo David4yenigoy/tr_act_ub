@@ -81,12 +81,12 @@ while(True):
                 buy(coinlist[i])
                 r30_lower28[i] = False
                 r30_hold = True
-                print(coin, datetime.datetime.now(), "buy")
+                print(coinlist[i], datetime.datetime.now(), "buy")
             elif now_rsi_30 >= 60 and cur_price >= profit_price and r30_higher70[i] == False :
                 sell(coinlist[i])
                 higher70[i] = True
                 r30_hold = False
-                print(coin, datetime.datetime.now(), "sold")
+                print(coinlist[i], datetime.datetime.now(), "sold")
             elif now_rsi_30 <= 50 :
                 higher70[i] = False
             
@@ -95,11 +95,11 @@ while(True):
             elif now_rsi_3 >= 33 and total < 110000 and lower28[i] == True and r30_hold == False :
                 buy(coinlist[i])
                 lower28[i] = False
-                print(coin, datetime.datetime.now(), "buy")
+                print(coinlist[i], datetime.datetime.now(), "buy")
             elif now_rsi_3 >= 60 and cur_price >= profit_price and higher70[i] == False and r30_hold == False :
                 sell(coinlist[i])
                 higher70[i] = True
-                print(coin, datetime.datetime.now(), "sold")
+                print(coinlist[i], datetime.datetime.now(), "sold")
             elif now_rsi_3 <= 50 :
                 higher70[i] = False
             time.sleep(0.2)
