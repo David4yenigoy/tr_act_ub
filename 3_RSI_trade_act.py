@@ -84,11 +84,11 @@ while(True):
                 print(coinlist[i], datetime.datetime.now(), "buy")
             elif now_rsi_30 >= 60 and cur_price >= profit_price and r30_higher70[i] == False :
                 sell(coinlist[i])
-                higher70[i] = True
+                r30_higher70[i] = True
                 r30_hold = False
                 print(coinlist[i], datetime.datetime.now(), "sold")
             elif now_rsi_30 <= 50 :
-                higher70[i] = False
+                r30_higher70[i] = False
             
             elif now_rsi_3 <= 30 :
                 lower28[i] = True
