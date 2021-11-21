@@ -65,7 +65,7 @@ while(True):
     for i in range(len(coinlist)):
         try:
             data_1 = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute30")
-            now_rsi_30 = rsi(data_2, 14).iloc[-1]
+            now_rsi_30 = rsi(data_1, 14).iloc[-1]
             data_2 = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute3")
             now_rsi_3 = rsi(data_2, 14).iloc[-1]
             amount = upbit.get_balance(coinlist[i])
