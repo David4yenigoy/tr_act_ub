@@ -37,7 +37,7 @@ def buy(coin):
 
     if money > 50500 : 
         res = upbit.buy_market_order(coin, 50000) 
-        print(coin, datetime.datetime.now(), "buy")
+        # print(coin, datetime.datetime.now(), "buy")
     return
 
     
@@ -49,7 +49,7 @@ def sell(coin):
     
     if total > 5000 : 
         res = upbit.sell_market_order(coin, amount) 
-        print(coin, datetime.datetime.now(), "sold")
+        # print(coin, datetime.datetime.now(), "sold")
     return
 
 
@@ -75,28 +75,28 @@ while(True):
             total = amount * cur_price
             print(coinlist[i], datetime.datetime.now(), "< RSI 3 > :", now_rsi_3)
             
-            if now_rsi_30 <= 30 :
+            if now_rsi_30 <= 34 :
                 r30_lower28[i] = True
-            elif now_rsi_30 >= 33 and total < 110000 and r30_lower28[i] == True :
+            elif now_rsi_30 >= 35 and total < 110000 and r30_lower28[i] == True :
                 buy(coinlist[i])
                 r30_lower28[i] = False
-                r30_hold = True
+                r30_hold[i] = True
                 print(coinlist[i], datetime.datetime.now(), "buy")
             elif now_rsi_30 >= 60 and cur_price >= profit_price and r30_higher70[i] == False :
                 sell(coinlist[i])
                 r30_higher70[i] = True
-                r30_hold = False
+                r30_hold[i] = False
                 print(coinlist[i], datetime.datetime.now(), "sold")
             elif now_rsi_30 <= 50 :
                 r30_higher70[i] = False
             
             elif now_rsi_3 <= 30 :
                 lower28[i] = True
-            elif now_rsi_3 >= 33 and total < 110000 and lower28[i] == True and r30_hold == False :
+            elif now_rsi_3 >= 33 and total < 110000 and lower28[i] == True and r30_hold[i] == False :
                 buy(coinlist[i])
                 lower28[i] = False
                 print(coinlist[i], datetime.datetime.now(), "buy")
-            elif now_rsi_3 >= 60 and cur_price >= profit_price and higher70[i] == False and r30_hold == False :
+            elif now_rsi_3 >= 60 and cur_price >= profit_price and higher70[i] == False and r30_hold[i] == False :
                 sell(coinlist[i])
                 higher70[i] = True
                 print(coinlist[i], datetime.datetime.now(), "sold")
