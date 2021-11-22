@@ -50,6 +50,9 @@ def sell(coin):
     if total > 5000 : 
         res = upbit.sell_market_order(coin, amount) 
         print(coin, datetime.datetime.now(), "sold")
+    elif total >150500 :
+        res = upbit.sell_market_order(coin, amount) 
+        print(coin, datetime.datetime.now(), "1/3 sold")
     return
 
 
@@ -77,7 +80,7 @@ while(True):
             
             if now_rsi_30 <= 34 :
                 r30_lower28[i] = True
-            elif now_rsi_30 >= 35 and total < 110000 and r30_lower28[i] == True :
+            elif now_rsi_30 >= 35 and total < 95000 and r30_lower28[i] == True :
                 buy(coinlist[i])
                 r30_lower28[i] = False
                 r30_hold[i] = True                
@@ -90,7 +93,7 @@ while(True):
             
             elif now_rsi_3 <= 30 :
                 lower28[i] = True
-            elif now_rsi_3 >= 33 and total < 110000 and lower28[i] == True and r30_hold[i] == False :
+            elif now_rsi_3 >= 33 and total < 95000 and lower28[i] == True and r30_hold[i] == False :
                 buy(coinlist[i])
                 lower28[i] = False
             elif now_rsi_3 >= 60 and cur_price >= profit_price and higher70[i] == False and r30_hold[i] == False :
