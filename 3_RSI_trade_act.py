@@ -51,7 +51,7 @@ def sell(coin):
         res = upbit.sell_market_order(coin, amount) 
         print(coin, datetime.datetime.now(), "sold")
     elif total >150500 :
-        res = upbit.sell_market_order(coin, amount) 
+        res = upbit.sell_market_order(coin, 50100) 
         print(coin, datetime.datetime.now(), "1/3 sold")
     return
 
