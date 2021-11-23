@@ -84,24 +84,23 @@ while(True):
                 buy(coinlist[i])
                 r30_lower28[i] = False
                 r30_hold[i] = True                
-            elif now_rsi_30 >= 60 and cur_price >= profit_price and r30_higher70[i] == False :
+            elif now_rsi_30 >= 60 and cur_price >= profit_price and :
                 sell(coinlist[i])
-                r30_higher70[i] = True
-                r30_hold[i] = False                
-            elif now_rsi_30 <= 50 :
-                r30_higher70[i] = False
+#                 r30_higher70[i] = True
+                r30_hold[i] = False 
+            elif now_rsi_30 >= 60 :
+                r30_hold[i] = False
             
             elif now_rsi_3 <= 30 :
                 lower28[i] = True
             elif now_rsi_3 >= 33 and total < 95000 and lower28[i] == True and r30_hold[i] == False :
                 buy(coinlist[i])
                 lower28[i] = False
-            elif now_rsi_3 >= 60 and cur_price >= profit_price and higher70[i] == False and r30_hold[i] == False :
+            elif now_rsi_3 >= 60 and cur_price >= profit_price and r30_hold[i] == False :
                 sell(coinlist[i])
-                higher70[i] = True
-            elif now_rsi_3 <= 50 :
-                higher70[i] = False
-            time.sleep(0.2)
+            elif now_rsi_3 >= 50 :
+                lower28[i] = False
+            time.sleep(0.1)
             
         except Exception as e:
             print(e)
