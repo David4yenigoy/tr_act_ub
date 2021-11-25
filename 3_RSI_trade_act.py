@@ -65,14 +65,16 @@ while(True):
         try: 
             data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute3")
             now_rsi = rsi(data, 14).iloc[-1]
+            amount = upbit.get_balance(coinlist[i]) 
             av_buy = float(upbit.get_avg_buy_price(coinlist[i]))
             profit_price = round(av_buy*1.02,4)   
             cur_price = pyupbit.get_current_price(coinlist[i])
+            total = amount * cur_price 
             # print(coinlist[i], "현재시간: ", datetime.datetime.now(), "< RSI > :", now_rsi)            
         
             if now_rsi <= 28 :
                 lower28[i] = True
-            elif now_rsi >= 30 and lower28[i] == True:
+            elif now_rsi >= 30 and lower28[i] == True and total < 95000 :
                 buy(coinlist[i])
                 lower28[i] = False
             elif cur_price >= profit_price and av_buy > 0 :
