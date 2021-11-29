@@ -4,8 +4,9 @@ import datetime
 import time
 
 
-access = 'gw60JrS4pv82Ws5NrKoAVeC4rxdnsuOcWQlQTmDF'
-secret = 'N499AtpKZgSeCDfItmUz3rAiEMk8HR22w3htCpqE'
+access = ''u
+
+secret = ''
 
 upbit = pyupbit.Upbit(access, secret)
 
