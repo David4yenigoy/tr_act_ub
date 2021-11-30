@@ -3,11 +3,8 @@ import pandas
 import datetime 
 import time
 
-f = open("./phmemo.txt")
-lines = f.readlines()
-access = lines[1].strip()   # access key
-secret = lines[3].strip()   # secret key
-f.close()
+access = ''
+secret = ''
 
 upbit = pyupbit.Upbit(access, secret)
 
@@ -43,35 +40,33 @@ def get_start_time(ticker):
     return start_time
 
 
-coinlist = pyupbit.get_tickers(fiat="KRW")        
-dic_01 ={}
 
-now = datetime.datetime.now()
-start_time = get_start_time('KRW-BTC')
-end_time = start_time + datetime.timedelta(days=1)
 
-if start_time < now :
-    for i in range(len(coinlist)):
-        df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
-        volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
-
-        if volatile >= 10 :
-            dic_01[coinlist[i]] = volatile                
-            time.sleep(0.3)
-
-    a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
-    targetlist = [t[0] for t in a][:10]
-    print(now,
-          targetlist)
 
     
 while(True):
     try :
+        coinlist = pyupbit.get_tickers(fiat="KRW")        
+        dic_01 ={}
         now = datetime.datetime.now()
         start_time = get_start_time('KRW-BTC')
         end_time = start_time + datetime.timedelta(days=1)
+        
+        if start_time < now < start_time + datetime.timedelta(seconds=300):
+            for i in range(len(coinlist)):
+                df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
+                volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
 
-        if start_time < now < end_time - datetime.timedelta(seconds=180): 
+            if volatile >= 10 :
+                dic_01[coinlist[i]] = volatile                
+                time.sleep(0.3)
+
+            a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
+            targetlist = [t[0] for t in a][:10]
+            print(now,
+                  targetlist)
+
+        if start_time + datetime.timedelta(seconds=305) < now < end_time - datetime.timedelta(seconds=10): 
             print(now)
             # 매수조건 검색
             hold_sign = []
