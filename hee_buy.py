@@ -2,6 +2,7 @@ import pyupbit
 import pandas 
 import datetime 
 import time
+from pytz import timezone
 
 access = ''
 secret = ''
