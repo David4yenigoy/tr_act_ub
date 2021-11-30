@@ -41,6 +41,8 @@ def get_start_time(ticker):
     return start_time
 
     """초기 리스트 세팅"""
+coinlist = pyupbit.get_tickers(fiat="KRW")   
+
 for i in range(len(coinlist)):
     df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
     volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
