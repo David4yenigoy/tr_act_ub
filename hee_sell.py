@@ -42,7 +42,7 @@ def get_start_time(ticker):
     
 while(True):
     try :
-        now = datetime.datetime.now()
+        now = datetime.datetime.now() + datetime.timedelta(hours=9)
         start_time = get_start_time('KRW-BTC')
         end_time = start_time + datetime.timedelta(days=1)
 
