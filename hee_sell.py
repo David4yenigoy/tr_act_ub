@@ -4,7 +4,7 @@ import datetime
 import time
 
 
-access = ''u
+access = ''
 
 secret = ''
 
@@ -42,7 +42,7 @@ def get_start_time(ticker):
     
 while(True):
     try :
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(timezone('Asia/Seoul'))
         start_time = get_start_time('KRW-BTC')
         end_time = start_time + datetime.timedelta(days=1)
 
@@ -67,7 +67,7 @@ while(True):
                 av_buy = float(upbit.get_avg_buy_price(coins[c]))
                 profit_price = round(av_buy*1.02, 4)   
                 cur_price = pyupbit.get_current_price(coins[c]) 
-                # print(coins[c], datetime.datetime.now(), 'now_rsi', now_rsi)
+                # print(coins[c], datetime.datetime.now(timezone('Asia/Seoul')), 'now_rsi', now_rsi)
 
                 if cur_price > profit_price and av_buy > 0 :
                     sell(coins[c])               
