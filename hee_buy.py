@@ -15,7 +15,7 @@ def buy(coin):
     cur_price = pyupbit.get_current_price(coin) 
     total = amount * cur_price 
     money = upbit.get_balance("KRW") 
-    print(coin, datetime.datetime.now(), "Buy", now_rsi)
+    print(coin, datetime.datetime.now(timezone('Asia/Seoul')), "Buy", now_rsi)
     if money > 301000 and total < 300000 : 
         res = upbit.buy_market_order(coin, 300000) 
     return
@@ -48,7 +48,7 @@ while(True):
     try :
         coinlist = pyupbit.get_tickers(fiat="KRW")        
         dic_01 ={}
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(timezone('Asia/Seoul'))
         start_time = get_start_time('KRW-BTC')
         end_time = start_time + datetime.timedelta(days=1)
         
@@ -59,10 +59,15 @@ while(True):
 
             if volatile >= 10 :
                 dic_01[coinlist[i]] = volatile                
-                time.sleep(0.3)
+                time.sleep(0.2)
 
             a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
             targetlist = [t[0] for t in a][:10]
+            if 'KRW-BTC' in targetlist :
+                targetlist.remove('KRW-BTC')
+            elif 'KRW-ETH' in targetlist :
+                targetlist.remove('KRW-ETH')
+            targetlist.extend(['KRW-BTC', 'KRW-ETH'])
             print(now,
                   targetlist)
 
@@ -72,16 +77,16 @@ while(True):
             hold_sign = []
             hold_sign2 = []
             hold_sign3 = []
+            
+            hold_sign.append(False)
+            hold_sign2.append(False)
+            hold_sign3.append(False)
 
             for i in range(len(targetlist)) :
-                hold_sign.append(False)
-                hold_sign2.append(False)
-                hold_sign3.append(False)
-
                 data = pyupbit.get_ohlcv(ticker=targetlist[i], interval="minute3")
                 now_rsi = rsi(data, 14).iloc[-1]
                 cur_price = pyupbit.get_current_price(targetlist[i])   
-                print(targetlist[i], datetime.datetime.now(), "checking rsi", now_rsi)
+                print(targetlist[i], datetime.datetime.now(timezone('Asia/Seoul')), "checking rsi", now_rsi)
 
                 if now_rsi <= 28 and hold_sign[i] == False and hold_sign3[i] == False :
                     buy(targetlist[i])                        
