@@ -41,7 +41,8 @@ def get_start_time(ticker):
     return start_time
 
     """초기 리스트 세팅"""
-coinlist = pyupbit.get_tickers(fiat="KRW")   
+coinlist = pyupbit.get_tickers(fiat="KRW") 
+dic_01 = {}
 
 for i in range(len(coinlist)):
     df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
