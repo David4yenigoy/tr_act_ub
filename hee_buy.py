@@ -53,9 +53,9 @@ while(True):
                 df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
                 volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
 
-            if volatile >= 10 :
-                dic_01[coinlist[i]] = volatile                
-                time.sleep(0.2)
+                if volatile >= 10 :
+                    dic_01[coinlist[i]] = volatile                
+                    time.sleep(0.2)
 
             a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
             targetlist = [t[0] for t in a][:10]
