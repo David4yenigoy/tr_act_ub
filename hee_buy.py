@@ -40,12 +40,29 @@ def get_start_time(ticker):
     start_time = df.index[0]
     return start_time
 
-    
+    """초기 리스트 세팅"""
+for i in range(len(coinlist)):
+    df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
+    volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
+    time.sleep(0.1)
+    if volatile >= 10 :
+        dic_01[coinlist[i]] = volatile                
+        time.sleep(0.2)
+
+a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
+target = [t[0] for t in a][:10]
+if 'KRW-BTC' in target :
+    target.remove('KRW-BTC')
+elif 'KRW-ETH' in target :
+    target.remove('KRW-ETH')
+targetlist = target.extend(['KRW-BTC', 'KRW-ETH'])
+
+# 거래시작    
 while(True):
     try :
         coinlist = pyupbit.get_tickers(fiat="KRW")        
         dic_01 ={}
-        now = datetime.datetime.now(timezone('Asia/Seoul'))
+        now = datetime.datetime.now()+ datetime.timedelta(hours=9)
         start_time = get_start_time('KRW-BTC')
         end_time = start_time + datetime.timedelta(days=1)
         
