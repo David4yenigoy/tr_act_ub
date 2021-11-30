@@ -100,7 +100,7 @@ while(True):
                     hold_sign[i] = False
                     hold_sign2[i] = False
                     hold_sign3[i] = False
-                time.sleep(0.5)
+                time.sleep(0.2)
 
     except Exception as e:
         print(e)
