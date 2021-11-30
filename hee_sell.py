@@ -71,7 +71,7 @@ while(True):
 
                 if cur_price > profit_price and av_buy > 0 :
                     sell(coins[c])               
-                elif cur_price < av_buy*0.95 :
+                elif cur_price < av_buy*0.92 :
                     sell(coins[c])
                 time.sleep(0.2)
 
