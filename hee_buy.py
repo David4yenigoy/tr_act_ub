@@ -59,12 +59,12 @@ while(True):
                     time.sleep(0.2)
 
             a = sorted(dic_01.items(), key=lambda dic_01: dic_01[1], reverse=True)
-            targetlist = [t[0] for t in a][:10]
-            if 'KRW-BTC' in targetlist :
-                targetlist.remove('KRW-BTC')
-            elif 'KRW-ETH' in targetlist :
-                targetlist.remove('KRW-ETH')
-            targetlist.extend(['KRW-BTC', 'KRW-ETH'])
+            target = [t[0] for t in a][:10]
+            if 'KRW-BTC' in target :
+                target.remove('KRW-BTC')
+            elif 'KRW-ETH' in target :
+                target.remove('KRW-ETH')
+            targetlist = target.extend(['KRW-BTC', 'KRW-ETH'])
             print(now,
                   targetlist)
 
