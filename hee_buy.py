@@ -52,7 +52,7 @@ while(True):
             for i in range(len(coinlist)):
                 df = pyupbit.get_ohlcv(coinlist[i], interval="day", count=2)
                 volatile = (df.iloc[0]['high'] - df.iloc[0]['low']) / df.iloc[0]['open'] * 100
-
+                time.sleep(0.1)
                 if volatile >= 10 :
                     dic_01[coinlist[i]] = volatile                
                     time.sleep(0.2)
