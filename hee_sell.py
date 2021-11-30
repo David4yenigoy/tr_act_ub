@@ -2,10 +2,10 @@ import pyupbit
 import pandas 
 import datetime 
 import time
+from pytz import timezone
 
 
 access = ''
-
 secret = ''
 
 upbit = pyupbit.Upbit(access, secret)
@@ -16,7 +16,7 @@ def sell(coin):
     amount = upbit.get_balance(coin) 
     cur_price = pyupbit.get_current_price(coin) 
     total = amount * cur_price 
-    print(coin, datetime.datetime.now(),"Sold", now_rsi)
+    print(coin, datetime.datetime.now(timezone('Asia/Seoul')),"Sold", now_rsi)
     if total > 5000 : 
         res = upbit.sell_market_order(coin, amount) 
     return
