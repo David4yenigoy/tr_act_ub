@@ -16,8 +16,8 @@ def buy(coin):
     total = amount * cur_price 
     money = upbit.get_balance("KRW") 
     print(coin, datetime.datetime.now(timezone('Asia/Seoul')), "Buy", now_rsi)
-    if money > 301000 and total < 300000 : 
-        res = upbit.buy_market_order(coin, 300000) 
+    if money > 201000 and total < 400000 : 
+        res = upbit.buy_market_order(coin, 200000) 
     return
 
 
@@ -38,10 +38,6 @@ def get_start_time(ticker):
     df = pyupbit.get_ohlcv(ticker, interval="day", count=1)
     start_time = df.index[0]
     return start_time
-
-
-
-
 
     
 while(True):
