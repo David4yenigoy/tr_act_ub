@@ -42,38 +42,39 @@ def get_start_time(ticker):
     
 while(True):
     try :
-        now = datetime.datetime.now() + datetime.timedelta(hours=9)
-        start_time = get_start_time('KRW-BTC')
-        end_time = start_time + datetime.timedelta(days=1)
+        now = datetime.datetime.now()
+        # 매도조건 판단
+        balances = upbit.get_balances()
+        coins = []
+        for i in range(len(balances)) :
+            a = balances[i]['currency']
+            coins.append('KRW-'+ a )
+            if 'KRW-BTC' in coins :
+                coins.remove('KRW-BTC')
+            elif 'KRW-ETH' in coins :
+                coins.remove('KRW-ETH')            
+            elif 'KRW-HIVE' in coins :
+                coins.remove('KRW-HIVE')            
+            elif 'KRW-CRO' in coins :
+                coins.remove('KRW-CRO')
+                
+        coins.remove('KRW-KRW')
+        coins.remove('KRW-VTHO')
+        coins.remove('KRW-XYM')
+        coins.remove('KRW-APENFT')
+        print(now,coins)
 
-        if start_time < now < end_time - datetime.timedelta(seconds=180): 
+        for c in range(len(coins)) :
+            data = pyupbit.get_ohlcv(ticker=coins[c], interval="minute3")
+            now_rsi = rsi(data, 14).iloc[-1]
+            av_buy = float(upbit.get_avg_buy_price(coins[c]))
+            profit_price = round(av_buy*1.02, 4)   
+            cur_price = pyupbit.get_current_price(coins[c]) 
+            # print(coins[c], datetime.datetime.now(timezone('Asia/Seoul')), 'now_rsi', now_rsi)
 
-            # 매도조건 판단
-            balances = upbit.get_balances()
-            coins = []
-            for i in range(len(balances)) :
-                a = balances[i]['currency']
-                coins.append('KRW-'+ a )
-            coins.remove('KRW-KRW')
-            coins.remove('KRW-VTHO')
-            coins.remove('KRW-XYM')
-            coins.remove('KRW-APENFT')
-            print(now,
-                  coins)
-
-            for c in range(len(coins)) :
-                data = pyupbit.get_ohlcv(ticker=coins[c], interval="minute3")
-                now_rsi = rsi(data, 14).iloc[-1]
-                av_buy = float(upbit.get_avg_buy_price(coins[c]))
-                profit_price = round(av_buy*1.02, 4)   
-                cur_price = pyupbit.get_current_price(coins[c]) 
-                # print(coins[c], datetime.datetime.now(timezone('Asia/Seoul')), 'now_rsi', now_rsi)
-
-                if cur_price > profit_price and av_buy > 0 :
-                    sell(coins[c])               
-                elif cur_price < av_buy*0.92 :
-                    sell(coins[c])
-                time.sleep(0.2)
+            if cur_price > profit_price and av_buy > 0 :
+                sell(coins[c])                           
+            time.sleep(0.2)
 
 
     except Exception as e:
