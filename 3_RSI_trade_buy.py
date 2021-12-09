@@ -33,9 +33,12 @@ coinlist.remove("KRW-CRO")
 # 시장가 매수 함수 
 def buy(coin): 
     money = upbit.get_balance("KRW")
+    amount = upbit.get_balance(coin) 
+    cur_price = pyupbit.get_current_price(coin) 
+    total = amount * cur_price 
     print(coin, datetime.datetime.now(),"Buy_G")
-    if money > 21000 : 
-        res = upbit.buy_market_order(coin, 20000)     
+    if money > 50500 and total < 450000 : 
+        res = upbit.buy_market_order(coin, 50000)     
     return
 
 # 시장가 매도 함수 
@@ -52,21 +55,18 @@ def sell(coin):
 # initiate
 lower28 = []
 higher70 = []
+higher2 = []
 
 for i in range(len(coinlist)):
     lower28.append(False)
     higher70.append(False)    
+    hgier2.append(True)
 
 while(True):
     for i in range(len(coinlist)):
         try: 
-            data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute3")
+            data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute30")
             now_rsi = rsi(data, 14).iloc[-1]
-            amount = upbit.get_balance(coinlist[i]) 
-            av_buy = float(upbit.get_avg_buy_price(coinlist[i]))
-            profit_price = round(av_buy*1.015,4)   
-            cur_price = pyupbit.get_current_price(coinlist[i])
-            total = amount * cur_price 
             # print(coinlist[i], "현재시간: ", datetime.datetime.now(), "< RSI > :", now_rsi)            
         
             if now_rsi <= 28 :
@@ -74,12 +74,18 @@ while(True):
             elif now_rsi >= 30 and lower28[i] == True and higher70[i] == False :
                 buy(coinlist[i])
                 higher70[i] = True
-            
+                
+            elif now_rsi <= 65 and now_rsi <= 70 and higher2[i] == False :
+                buy(coinlist[i])
+                higher2 = True
+            elif now_rsi <= 55 and higher2[i] == True :
+                higher2 = False
+                
             elif now_rsi >= 50 :
                 lower28[i] = False
                 higher70[i] = False
                 
-            time.sleep(0.2)
+            time.sleep(0.1)
             
         except Exception as e:
             print(e)
