@@ -68,13 +68,13 @@ while(True):
             now_volume = now_price['volume']
 
             if cur_price > profit_price and av_buy > 0 :
-                if cur_price > av_buy*1.03 :
+                if cur_price > round(av_buy*1.03, 4) :
                     prifit_price = round(av_buy*1.05, 4)
                     if cur_price > profit_price :
                         profit_price = round(av_buy*1.07, 4)
                         if cur_price > profit_price :
                             sell(coins[c])
-                        elif cur_price < round(av_buy*1.045, 4) :
+                        elif cur_price < round(av_buy*1.055, 4) :
                             sell(coins[c])
                     elif cur_price < round(av_buy*1.035, 4) :
                         sell(coins[c])
