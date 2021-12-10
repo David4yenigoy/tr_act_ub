@@ -48,16 +48,7 @@ while(True):
         coins = []
         for i in range(len(balances)) :
             a = balances[i]['currency']
-            coins.append('KRW-'+ a )
-            if 'KRW-BTC' in coins :
-                coins.remove('KRW-BTC')
-            elif 'KRW-ETH' in coins :
-                coins.remove('KRW-ETH')            
-            elif 'KRW-HIVE' in coins :
-                coins.remove('KRW-HIVE')            
-            elif 'KRW-CRO' in coins :
-                coins.remove('KRW-CRO')
-                
+            coins.append('KRW-'+ a )                   
         coins.remove('KRW-KRW')
         coins.remove('KRW-VTHO')
         coins.remove('KRW-XYM')
@@ -68,12 +59,27 @@ while(True):
             data = pyupbit.get_ohlcv(ticker=coins[c], interval="minute3")
             now_rsi = rsi(data, 14).iloc[-1]
             av_buy = float(upbit.get_avg_buy_price(coins[c]))
-            profit_price = round(av_buy*1.02, 4)   
-            cur_price = pyupbit.get_current_price(coins[c]) 
-            # print(coins[c], datetime.datetime.now(timezone('Asia/Seoul')), 'now_rsi', now_rsi)
+            profit_price = round(av_buy*1.015, 4)
+            cur_price = pyupbit.get_current_price(coins[c])
+            df = pyupbit.get_ohlcv(ticker=coins[c], interval="minute5", count = 5)
+            recent_price = df.iloc[-2]
+            now_price = df.iloc[-1]
+            recent_volume = recent_price['volume']
+            now_volume = now_price['volume']
 
             if cur_price > profit_price and av_buy > 0 :
-                sell(coins[c])                           
+                if cur_price > av_buy*1.03 :
+                    prifit_price = round(av_buy*1.05, 4)
+                    if cur_price > profit_price :
+                        profit_price = round(av_buy*1.07, 4)
+                        if cur_price > profit_price :
+                            sell(coins[c])
+                        elif cur_price < round(av_buy*1.045, 4) :
+                            sell(coins[c])
+                    elif cur_price < round(av_buy*1.035, 4) :
+                        sell(coins[c])
+                else :
+                    sell(coins[c])                
             time.sleep(0.2)
 
 
