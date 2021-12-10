@@ -87,7 +87,7 @@ while(True):
                 buy(coinlist[i])
                 higher70[i] = True
                 
-            elif now_rsi <= 65 and now_rsi <= 70 and higher2[i] == False and now_volume >= recent_volume :
+            elif now_rsi >= 65 and now_rsi <= 70 and higher2[i] == False and now_volume >= recent_volume :
                 buy(coinlist[i])
                 higher2[i] = True
             elif now_rsi <= 55 and higher2[i] == True :
