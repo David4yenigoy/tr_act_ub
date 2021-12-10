@@ -47,7 +47,7 @@ while(True):
             data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute30")
             now_rsi = rsi(data, 14).iloc[-1]           
         
-            elif now_rsi >= 65 and now_rsi <= 70 and higher2[i] == False :
+            if now_rsi >= 65 and now_rsi <= 70 and higher2[i] == False :
                 buy(coinlist[i])
                 higher2[i] = True
             elif now_rsi <= 55 and higher2[i] == True :
