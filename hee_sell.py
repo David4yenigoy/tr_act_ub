@@ -56,16 +56,9 @@ while(True):
         print(now,coins)
 
         for c in range(len(coins)) :
-            data = pyupbit.get_ohlcv(ticker=coins[c], interval="minute3")
-            now_rsi = rsi(data, 14).iloc[-1]
             av_buy = float(upbit.get_avg_buy_price(coins[c]))
             profit_price = round(av_buy*1.015, 4)
             cur_price = pyupbit.get_current_price(coins[c])
-            df = pyupbit.get_ohlcv(ticker=coins[c], interval="minute5", count = 5)
-            recent_price = df.iloc[-2]
-            now_price = df.iloc[-1]
-            recent_volume = recent_price['volume']
-            now_volume = now_price['volume']
 
             if cur_price > profit_price and av_buy > 0 :
                 if cur_price > round(av_buy*1.03, 4) :
