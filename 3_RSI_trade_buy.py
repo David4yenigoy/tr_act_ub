@@ -72,7 +72,7 @@ while(True):
         try: 
             data = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute30")
             now_rsi = rsi(data, 14).iloc[-1]           
-            df = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute30", count = 5)
+            df = pyupbit.get_ohlcv(ticker=coinlist[i], interval="minute5", count = 5)
             recent_price = df.iloc[-2]
             now_price = df.iloc[-1]
             recent_volume = recent_price['volume']
