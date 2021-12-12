@@ -53,28 +53,37 @@ while(True):
         coins.remove('KRW-VTHO')
         coins.remove('KRW-XYM')
         coins.remove('KRW-APENFT')
-        print(now,coins)
+        
+        check1 = []
+        check2 = []
+        check3 = []
 
         for c in range(len(coins)) :
+            check1.append(False)
+            check2.append(False)
+            check3.append(False)
+            
             av_buy = float(upbit.get_avg_buy_price(coins[c]))
             profit_price = round(av_buy*1.015, 4)
             cur_price = pyupbit.get_current_price(coins[c])
 
-            if cur_price > profit_price and av_buy > 0 :
-                if cur_price > round(av_buy*1.03, 4) :
-                    prifit_price = round(av_buy*1.05, 4)
-                    if cur_price > profit_price :
-                        profit_price = round(av_buy*1.07, 4)
-                        if cur_price > profit_price :
-                            sell(coins[c])
-                        elif cur_price < round(av_buy*1.055, 4) :
-                            sell(coins[c])
-                    elif cur_price < round(av_buy*1.035, 4) :
-                        sell(coins[c])
-                else :
-                    sell(coins[c])                
-            time.sleep(0.2)
-
+            if cur_price > round(av_buy*1.02, 4) and check1[c] == False :
+                check1[c] = True
+            elif cur_price > round(av_buy*1.03, 4) and check2[c] == False :
+                check2[c] = True
+            elif cur_price > round(av_buy*1.05, 4) and check3[c] == False :
+                check3[c] = True
+            elif cur_price > round(av_buy*1.07, 4) :
+                sell(coins[c])
+            elif cur_price <= round(av_buy*1.05, 4) and check3[c] == True :
+                sell(coins[c])
+            elif cur_price <= round(av_buy*1.03, 4) and check2[c] == True :
+                sell(coins[c])
+            elif cur_price <= round(av_buy*1.02, 4) and check1[c] == True :
+                sell(coins[c])
+            elif cur_price >= profit_price and check1[c] == False and av_buy > 0 :
+                sell(coins[c])            
+            time.sleep(0.1)
 
     except Exception as e:
         print(e)
