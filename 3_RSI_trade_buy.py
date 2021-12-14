@@ -139,12 +139,8 @@ while(True):
                     lower28[i] = True
                 elif now_rsi >= 30 and lower28[i] == True and higher70[i] == False :
                     buy(coinlist[i])
-                    higher70[i] = True
-                elif now_rsi >= 65 and now_rsi <= 70 and higher2[i] == False :
-                    buy(coinlist[i])
-                    higher2[i] = True
-                elif now_rsi <= 55 and higher2[i] == True :
-                    higher2[i] = False
+                    higher70[i] = True                
+                
                 elif now_rsi >= 50 :
                     lower28[i] = False
                     higher70[i] = False
@@ -154,13 +150,13 @@ while(True):
         elif ma10 > pyupbit.get_current_price('KRW-BTC') :
             cur_p_btc = pyupbit.get_current_price('KRW-BTC')
 
-            if btc_buy == False and start_time + datetime.timedelta(seconds=1650) < now < start_time + datetime.timedelta(seconds=1750) and recent_price > cur_p_btc :
+            if btc_buy == False and start_time + datetime.timedelta(seconds=1650) < now < start_time + datetime.timedelta(seconds=1750) : # and recent_price > cur_p_btc :
                 buy2('KRW-BTC')
                 btc_buy = True
-            elif recent_price3 > recent_price2 > recent_price > cur_p_btc and btc_buy_down == False :
-                buy2('KRW-BTC')
-                buy2('KRW-BTC')
-                btc_buy_down = True
+                if recent_price3 > recent_price2 > recent_price > cur_p_btc and btc_buy_down == False :
+                    buy2('KRW-BTC')
+                    buy2('KRW-BTC')
+                    btc_buy_down = True
 
             elif start_time + datetime.timedelta(seconds=1750) < now :
                 btc_buy = False
